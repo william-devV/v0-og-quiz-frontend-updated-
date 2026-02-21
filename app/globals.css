@@ -1,0 +1,205 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #F7F8FA;
+  --foreground: #1B2559;
+  --card: #FFFFFF;
+  --card-foreground: #1B2559;
+  --popover: #FFFFFF;
+  --popover-foreground: #1B2559;
+  --primary: #28A0F0;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1B2559;
+  --secondary-foreground: #FFFFFF;
+  --muted: #E9ECF2;
+  --muted-foreground: #5A6380;
+  --accent: #28A0F0;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #000000;
+  --input: #E9ECF2;
+  --ring: #28A0F0;
+  --chart-1: #28A0F0;
+  --chart-2: #1B2559;
+  --chart-3: #5A9BD5;
+  --chart-4: #FFFFFF;
+  --chart-5: #0A0F2C;
+  --radius: 0.5rem;
+}
+
+@theme inline {
+  --font-sans: 'Space Grotesk', 'Space Grotesk Fallback', sans-serif;
+  --font-mono: 'DM Sans', 'DM Sans Fallback', sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-navy: #1B2559;
+  --color-navy-dark: #0F1638;
+  --color-navy-light: #2A3A7A;
+  --color-arb-blue: #28A0F0;
+  --color-arb-blue-light: #E8F4FD;
+  --color-timer-red: #EF4444;
+  --color-timer-amber: #F59E0B;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Light textured background — subtle cross-hatch on warm white */
+.bg-texture-light {
+  background-color: #F7F8FA;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(40, 160, 240, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(27, 37, 89, 0.03) 0%, transparent 50%);
+}
+
+.bg-texture-light::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231B2559' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Dark navy background for splash/calculating */
+.bg-navy-texture {
+  background-color: #0F1638;
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(40, 160, 240, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(40, 160, 240, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 10%, rgba(40, 160, 240, 0.06) 0%, transparent 50%);
+}
+
+.bg-navy-texture::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2328A0F0' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Floating orb animations */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(-20px) translateX(10px); }
+  50% { transform: translateY(-10px) translateX(-5px); }
+  75% { transform: translateY(-25px) translateX(5px); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  33% { transform: translateY(-15px) translateX(-10px); }
+  66% { transform: translateY(-30px) translateX(8px); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 6s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 4s ease-in-out infinite;
+}
+
+/* Neo-brutalist shake animations */
+@keyframes shake-pass {
+  0% { transform: translateX(0); }
+  15% { transform: translateX(-5px); }
+  35% { transform: translateX(5px); }
+  55% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes shake-fail {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-10px); }
+  25% { transform: translateX(10px); }
+  40% { transform: translateX(-10px); }
+  55% { transform: translateX(10px); }
+  70% { transform: translateX(-8px); }
+  85% { transform: translateX(8px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes stamp-expand {
+  0% { transform: scale(0.3); opacity: 0; }
+  60% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: #28A0F0; }
+  50% { border-color: #1B2559; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(40, 160, 240, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(40, 160, 240, 0.5); }
+}
+
+.animate-shake-pass {
+  animation: shake-pass 0.4s ease-in-out;
+}
+
+.animate-shake-fail {
+  animation: shake-fail 0.6s ease-in-out;
+}
+
+.animate-stamp {
+  animation: stamp-expand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
