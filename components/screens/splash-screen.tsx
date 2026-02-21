@@ -2,7 +2,6 @@
 
 import { useEffect } from "react"
 import Image from "next/image"
-import { AnimatedBackground } from "@/components/animated-background"
 
 interface SplashScreenProps {
   onComplete: () => void
@@ -15,47 +14,54 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
   }, [onComplete])
 
   return (
-    <AnimatedBackground variant="dark">
-      <div className="flex min-h-[100dvh] flex-col items-center justify-center px-6">
-        <div className="flex flex-col items-center">
-          {/* Bobbing Arbitrum logo */}
-          <div className="animate-bob mb-8">
-            <div className="relative h-24 w-24 overflow-hidden rounded-3xl border-2 border-arb-blue/30 shadow-lg shadow-arb-blue/20 animate-pulse-glow">
-              <Image
-                src="/arbitrum-logo.svg"
-                alt="Arbitrum logo"
-                width={96}
-                height={96}
-                className="h-full w-full object-cover"
-                priority
-              />
-            </div>
-          </div>
+    <div
+      className="relative flex min-h-[100dvh] flex-col items-center justify-center"
+      style={{ backgroundColor: "#1B2559" }}
+    >
+      {/* Subtle accent glow */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div
+          className="absolute top-[30%] left-1/2 -translate-x-1/2 h-64 w-64 rounded-full blur-3xl"
+          style={{ backgroundColor: "rgba(40, 160, 240, 0.12)" }}
+        />
+      </div>
 
-          {/* Title */}
-          <h1 className="animate-fade-in-up font-sans text-4xl font-bold tracking-tight text-white sm:text-5xl">
-            Arbitrum OG Quiz
-          </h1>
-
-          {/* Subtle loading bar */}
-          <div className="animate-fade-in-up mt-8 h-1 w-48 overflow-hidden rounded-full bg-white/10" style={{ animationDelay: "0.2s" }}>
-            <div
-              className="h-full rounded-full bg-arb-blue"
-              style={{
-                animation: "splash-progress 2.2s ease-in-out forwards",
-              }}
+      <div className="relative z-10 flex flex-col items-center">
+        {/* Bobbing Arbitrum logo — true centered */}
+        <div className="animate-bob">
+          <div className="relative h-24 w-24 overflow-hidden rounded-3xl border-2 border-white/15 shadow-lg shadow-arb-blue/20 animate-pulse-glow">
+            <Image
+              src="/arbitrum-logo.svg"
+              alt="Arbitrum logo"
+              width={96}
+              height={96}
+              className="h-full w-full object-cover"
+              priority
             />
           </div>
         </div>
 
-        {/* Bottom text */}
-        <p
-          className="animate-fade-in-up absolute bottom-10 font-sans text-xs text-white/30"
-          style={{ animationDelay: "0.3s" }}
-        >
+        {/* Title below logo with comfortable gap */}
+        <h1 className="mt-6 font-sans text-3xl font-bold tracking-tight text-white sm:text-4xl">
           Arbitrum OG Quiz
-        </p>
+        </h1>
+
+        {/* Subtle loading bar */}
+        <div className="mt-8 h-1 w-48 overflow-hidden rounded-full bg-white/10">
+          <div
+            className="h-full rounded-full"
+            style={{
+              backgroundColor: "#28A0F0",
+              animation: "splash-progress 2.2s ease-in-out forwards",
+            }}
+          />
+        </div>
       </div>
-    </AnimatedBackground>
+
+      {/* Bottom text */}
+      <p className="absolute bottom-10 font-sans text-xs text-white/30">
+        Arbitrum OG Quiz
+      </p>
+    </div>
   )
 }

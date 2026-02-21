@@ -27,6 +27,7 @@ const TOTAL_QUESTIONS = 20
 export default function Home() {
   const [currentScreen, setCurrentScreen] = useState<ScreenName>("splash")
   const [score, setScore] = useState(0)
+  const [hasMinted, setHasMinted] = useState(false)
 
   const handleQuizComplete = useCallback(
     (finalScore: number) => {
@@ -46,17 +47,24 @@ export default function Home() {
 
   const handleRetry = useCallback(() => {
     setScore(0)
+    setHasMinted(false)
     setCurrentScreen("rules")
   }, [])
 
   const handleExit = useCallback(() => {
     setScore(0)
+    setHasMinted(false)
     setCurrentScreen("welcome")
   }, [])
 
   const handleMintAndShare = useCallback(() => {
     // In a real app this would trigger wallet connect + mint tx
     setCurrentScreen("mint-success")
+  }, [])
+
+  const handleMintDismiss = useCallback(() => {
+    setHasMinted(true)
+    setCurrentScreen("results-pass")
   }, [])
 
   return (
@@ -91,6 +99,7 @@ export default function Home() {
         <ResultsPassScreen
           score={score}
           total={TOTAL_QUESTIONS}
+          hasMinted={hasMinted}
           onMintAndShare={handleMintAndShare}
         />
       )}
@@ -105,7 +114,7 @@ export default function Home() {
       )}
 
       {currentScreen === "mint-success" && (
-        <MintSuccessScreen onExit={handleExit} />
+        <MintSuccessScreen onExit={handleMintDismiss} />
       )}
     </main>
   )

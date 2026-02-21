@@ -211,7 +211,7 @@
 }
 
 .animate-bob {
-  animation: bob 2.5s ease-in-out infinite;
+  animation: bob 2s ease-in-out infinite;
 }
 
 /* Splash screen progress bar */
@@ -243,7 +243,8 @@
 
 /* Warm light background with soft grain texture */
 .bg-texture-warm {
-  background-color: #FAFBFD;
+  position: relative;
+  background-color: #F7F8FA;
   background-image:
     radial-gradient(ellipse at 20% 0%, rgba(40, 160, 240, 0.06) 0%, transparent 60%),
     radial-gradient(ellipse at 80% 100%, rgba(27, 37, 89, 0.04) 0%, transparent 60%),
@@ -262,7 +263,8 @@
 
 /* Soft navy dark background with warm glow */
 .bg-navy-warm {
-  background-color: #0D1229;
+  position: relative;
+  background-color: #1B2559;
   background-image:
     radial-gradient(ellipse at 30% 20%, rgba(40, 160, 240, 0.14) 0%, transparent 50%),
     radial-gradient(ellipse at 70% 80%, rgba(40, 160, 240, 0.08) 0%, transparent 50%),

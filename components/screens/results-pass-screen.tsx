@@ -6,12 +6,14 @@ import { AnimatedBackground } from "@/components/animated-background"
 interface ResultsPassScreenProps {
   score: number
   total: number
+  hasMinted?: boolean
   onMintAndShare: () => void
 }
 
 export function ResultsPassScreen({
   score,
   total,
+  hasMinted = false,
   onMintAndShare,
 }: ResultsPassScreenProps) {
   const percentage = Math.round((score / total) * 100)
@@ -21,6 +23,22 @@ export function ResultsPassScreen({
     const timer = setTimeout(() => setShouldShake(true), 100)
     return () => clearTimeout(timer)
   }, [])
+
+  const handleButtonClick = () => {
+    if (hasMinted) {
+      // Share on Farcaster
+      const shareText = encodeURIComponent(
+        `I scored ${score}/${total} (${percentage}%) on the Arbitrum OG Quiz! Think you can beat me?`
+      )
+      window.open(
+        `https://warpcast.com/~/compose?text=${shareText}`,
+        "_blank",
+        "noopener,noreferrer"
+      )
+    } else {
+      onMintAndShare()
+    }
+  }
 
   return (
     <AnimatedBackground variant="light">
@@ -49,10 +67,10 @@ export function ResultsPassScreen({
           </div>
 
           <button
-            onClick={onMintAndShare}
+            onClick={handleButtonClick}
             className="w-full rounded-2xl bg-arb-blue px-8 py-4 font-sans text-base font-bold text-white shadow-lg shadow-arb-blue/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-arb-blue/30 active:translate-y-0 active:shadow-md"
           >
-            {"Mint OG NFT & Share"}
+            {hasMinted ? "Share Your Score" : "Mint OG NFT & Share"}
           </button>
         </div>
       </div>
