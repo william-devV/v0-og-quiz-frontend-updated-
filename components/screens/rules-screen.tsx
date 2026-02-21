@@ -24,7 +24,7 @@ export function RulesScreen({ onStart, onBack }: RulesScreenProps) {
     <AnimatedBackground variant="light">
       <div className="flex min-h-[100dvh] flex-col items-center justify-center px-6 py-8">
         <div className="mx-auto w-full max-w-md">
-          <div className="border-3 border-black bg-white p-6 shadow-[6px_6px_0px_0px_#000000]">
+          <div className="rounded-2xl border border-navy/10 bg-white/90 p-6 shadow-lg backdrop-blur-sm">
             <h2 className="mb-6 font-sans text-2xl font-bold text-navy">
               Rules
             </h2>
@@ -35,7 +35,7 @@ export function RulesScreen({ onStart, onBack }: RulesScreenProps) {
                   key={i}
                   className="flex items-start gap-3 font-sans text-sm text-navy"
                 >
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center border-2 border-black bg-arb-blue font-sans text-xs font-bold text-white">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-arb-blue font-sans text-xs font-bold text-white">
                     {i + 1}
                   </span>
                   {rule}
@@ -43,12 +43,12 @@ export function RulesScreen({ onStart, onBack }: RulesScreenProps) {
               ))}
             </ul>
 
-            <label className="mt-8 flex cursor-pointer items-center gap-3 border-t-2 border-navy/10 pt-6">
+            <label className="mt-8 flex cursor-pointer items-center gap-3 border-t border-navy/8 pt-6">
               <input
                 type="checkbox"
                 checked={accepted}
                 onChange={(e) => setAccepted(e.target.checked)}
-                className="h-5 w-5 shrink-0 cursor-pointer appearance-none border-2 border-black bg-white checked:bg-arb-blue"
+                className="h-5 w-5 shrink-0 cursor-pointer appearance-none rounded-md border-2 border-navy/20 bg-white checked:border-arb-blue checked:bg-arb-blue transition-colors"
               />
               <span className="font-sans text-sm font-medium text-navy">
                 I understand the rules
@@ -59,7 +59,7 @@ export function RulesScreen({ onStart, onBack }: RulesScreenProps) {
               <button
                 onClick={onStart}
                 disabled={!accepted}
-                className="w-full border-3 border-black bg-arb-blue px-8 py-3 font-sans text-base font-bold text-white shadow-[4px_4px_0px_0px_#000000] transition-all enabled:hover:translate-x-[2px] enabled:hover:translate-y-[2px] enabled:hover:shadow-[2px_2px_0px_0px_#000000] enabled:active:translate-x-[4px] enabled:active:translate-y-[4px] enabled:active:shadow-none disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-full rounded-xl bg-arb-blue px-8 py-3.5 font-sans text-base font-bold text-white shadow-md shadow-arb-blue/20 transition-all enabled:hover:-translate-y-0.5 enabled:hover:shadow-lg enabled:hover:shadow-arb-blue/25 enabled:active:translate-y-0 enabled:active:shadow-sm disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {"Let's Go"}
               </button>

@@ -14,8 +14,8 @@ const _dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'OG Quiz — Prove You\'re an OG',
-  description: 'Take the OG Quiz: 20 questions, 15 seconds each. Score 70% to earn a verifiable NFT badge on Base.',
+  title: 'Arbitrum OG Quiz — Prove You\'re an OG',
+  description: 'Take the Arbitrum OG Quiz: 20 questions, 15 seconds each. Score 70% to earn a verifiable NFT badge. Only 36% make it.',
   generator: 'v0.app',
   icons: {
     icon: [

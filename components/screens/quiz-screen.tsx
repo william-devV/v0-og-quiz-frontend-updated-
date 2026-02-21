@@ -19,10 +19,10 @@ const TIMER_SECONDS = 15
 const labels = ["A", "B", "C", "D"]
 
 function getTimerColor(seconds: number): string {
-  if (seconds > 10) return "border-navy/30 bg-white text-navy"
-  if (seconds > 5) return "border-arb-blue bg-arb-blue-light text-arb-blue"
-  if (seconds > 3) return "border-timer-amber bg-amber-50 text-timer-amber"
-  return "border-timer-red bg-red-50 text-timer-red"
+  if (seconds > 10) return "border-navy/10 bg-white text-navy"
+  if (seconds > 5) return "border-arb-blue/30 bg-arb-blue/8 text-arb-blue"
+  if (seconds > 3) return "border-timer-amber/30 bg-amber-50 text-timer-amber"
+  return "border-timer-red/30 bg-red-50 text-timer-red"
 }
 
 function getTimerBarColor(seconds: number): string {
@@ -77,14 +77,14 @@ export function QuizScreen({ questions, onComplete }: QuizScreenProps) {
     <AnimatedBackground variant="light">
       <div className="flex min-h-[100dvh] flex-col">
         {/* Top bar */}
-        <div className="border-b-3 border-black bg-navy px-4 pt-4 pb-3">
+        <div className="border-b border-navy/10 bg-white/80 px-4 pt-4 pb-3 backdrop-blur-md">
           <div className="mx-auto flex w-full max-w-md items-center justify-between gap-3">
-            <span className="shrink-0 font-sans text-xs font-bold text-white">
+            <span className="shrink-0 rounded-full bg-navy/8 px-3 py-1 font-sans text-xs font-bold text-navy">
               {currentIndex + 1}/{totalQuestions}
             </span>
-            <div className="h-2 flex-1 overflow-hidden border border-white/20 bg-navy-dark">
+            <div className="h-2 flex-1 overflow-hidden rounded-full bg-navy/8">
               <div
-                className="h-full bg-arb-blue transition-all duration-300"
+                className="h-full rounded-full bg-arb-blue transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -97,20 +97,20 @@ export function QuizScreen({ questions, onComplete }: QuizScreenProps) {
             {/* Timer */}
             <div className="mb-6 flex flex-col items-center gap-2">
               <div
-                className={`flex h-16 w-16 items-center justify-center border-3 font-sans text-2xl font-bold transition-colors duration-300 ${getTimerColor(timeLeft)}`}
+                className={`flex h-16 w-16 items-center justify-center rounded-2xl border-2 font-sans text-2xl font-bold transition-colors duration-300 ${getTimerColor(timeLeft)}`}
               >
                 {timeLeft}
               </div>
-              <div className="h-1.5 w-32 overflow-hidden border border-navy/20 bg-muted">
+              <div className="h-1.5 w-32 overflow-hidden rounded-full bg-navy/8">
                 <div
-                  className={`h-full transition-all duration-1000 ease-linear ${getTimerBarColor(timeLeft)}`}
+                  className={`h-full rounded-full transition-all duration-1000 ease-linear ${getTimerBarColor(timeLeft)}`}
                   style={{ width: `${timerPercent}%` }}
                 />
               </div>
             </div>
 
             {/* Question */}
-            <div className="mb-6 border-3 border-black bg-white p-5 shadow-[4px_4px_0px_0px_#000000]">
+            <div className="mb-6 rounded-2xl border border-navy/10 bg-white/90 p-5 shadow-md backdrop-blur-sm">
               <p className="font-sans text-lg font-bold leading-relaxed text-navy text-balance">
                 {currentQuestion.question}
               </p>
@@ -124,17 +124,17 @@ export function QuizScreen({ questions, onComplete }: QuizScreenProps) {
                   <button
                     key={i}
                     onClick={() => setSelectedAnswer(i)}
-                    className={`flex w-full items-center gap-3 border-3 px-4 py-3 text-left font-sans text-sm font-medium transition-all ${
+                    className={`flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-left font-sans text-sm font-medium transition-all ${
                       isSelected
-                        ? "border-black bg-arb-blue text-white shadow-[2px_2px_0px_0px_#000000]"
-                        : "border-black bg-white text-navy shadow-[3px_3px_0px_0px_#000000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#000000]"
+                        ? "border-arb-blue bg-arb-blue text-white shadow-md shadow-arb-blue/20"
+                        : "border-navy/10 bg-white text-navy shadow-sm hover:-translate-y-0.5 hover:shadow-md hover:border-arb-blue/30"
                     }`}
                   >
                     <span
-                      className={`flex h-7 w-7 shrink-0 items-center justify-center border-2 font-sans text-xs font-bold ${
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg font-sans text-xs font-bold ${
                         isSelected
-                          ? "border-white bg-white text-arb-blue"
-                          : "border-navy bg-navy/5 text-navy"
+                          ? "bg-white/20 text-white"
+                          : "bg-navy/5 text-navy"
                       }`}
                     >
                       {labels[i]}
@@ -150,7 +150,7 @@ export function QuizScreen({ questions, onComplete }: QuizScreenProps) {
               <button
                 onClick={handleNext}
                 disabled={selectedAnswer === null}
-                className="w-full border-3 border-black bg-navy px-8 py-3 font-sans text-base font-bold text-white shadow-[4px_4px_0px_0px_#000000] transition-all enabled:hover:translate-x-[2px] enabled:hover:translate-y-[2px] enabled:hover:shadow-[2px_2px_0px_0px_#000000] enabled:active:translate-x-[4px] enabled:active:translate-y-[4px] enabled:active:shadow-none disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-full rounded-xl bg-navy px-8 py-3.5 font-sans text-base font-bold text-white shadow-md transition-all enabled:hover:-translate-y-0.5 enabled:hover:shadow-lg enabled:active:translate-y-0 enabled:active:shadow-sm disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {currentIndex + 1 >= totalQuestions ? "Finish" : "Next"}
               </button>

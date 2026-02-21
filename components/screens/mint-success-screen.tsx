@@ -34,7 +34,7 @@ export function MintSuccessScreen({ onExit }: MintSuccessScreenProps) {
         <div
           className={`mx-auto flex w-full max-w-md flex-col items-center ${shouldAnimate ? "animate-stamp" : "opacity-0"}`}
         >
-          <div className="mb-8 border-3 border-arb-blue p-6 animate-pulse-glow">
+          <div className="mb-8 rounded-2xl border-2 border-arb-blue/40 p-6 animate-pulse-glow">
             <h1 className="font-sans text-3xl font-bold text-white">
               NFT Minted.
             </h1>
@@ -49,13 +49,13 @@ export function MintSuccessScreen({ onExit }: MintSuccessScreenProps) {
             <p className="mb-2 font-sans text-xs text-white/50">
               Transaction Hash
             </p>
-            <div className="flex items-center border-3 border-black bg-navy-dark">
+            <div className="flex items-center overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm">
               <code className="flex-1 overflow-hidden px-3 py-3 font-mono text-xs text-white text-ellipsis">
                 {MOCK_TX_HASH}
               </code>
               <button
                 onClick={handleCopy}
-                className="shrink-0 border-l-2 border-white/10 px-3 py-3 font-sans text-xs font-bold text-arb-blue transition-colors hover:bg-arb-blue/20"
+                className="shrink-0 border-l border-white/10 px-3 py-3 font-sans text-xs font-bold text-arb-blue transition-colors hover:bg-arb-blue/10"
               >
                 {copied ? "Copied" : "Copy"}
               </button>
@@ -68,7 +68,7 @@ export function MintSuccessScreen({ onExit }: MintSuccessScreenProps) {
               href={`https://basescan.org/tx/${MOCK_TX_HASH}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center border-3 border-black bg-arb-blue px-8 py-3 font-sans text-base font-bold text-white shadow-[4px_4px_0px_0px_#000000] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+              className="flex w-full items-center justify-center rounded-xl bg-arb-blue px-8 py-3.5 font-sans text-base font-bold text-white shadow-md shadow-arb-blue/25 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-arb-blue/30 active:translate-y-0 active:shadow-sm"
             >
               View on Basescan
             </a>

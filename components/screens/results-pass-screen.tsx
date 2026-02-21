@@ -29,8 +29,8 @@ export function ResultsPassScreen({
           className={`mx-auto flex w-full max-w-md flex-col items-center ${shouldShake ? "animate-shake-pass" : ""}`}
         >
           {/* Verified badge */}
-          <div className="mb-4 flex h-14 w-14 items-center justify-center border-3 border-black bg-arb-blue shadow-[3px_3px_0px_0px_#000000]">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="square">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-arb-blue shadow-lg shadow-arb-blue/25">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
@@ -42,15 +42,15 @@ export function ResultsPassScreen({
             They were right about you, you really are an OG.
           </p>
 
-          <div className="mb-10 w-full border-3 border-black bg-arb-blue p-6 shadow-[6px_6px_0px_0px_#000000]">
+          <div className="mb-10 w-full rounded-2xl bg-arb-blue p-6 shadow-lg shadow-arb-blue/20">
             <p className="text-center font-sans text-3xl font-bold text-white">
-              {score} / {total} — {percentage}%
+              {score} / {total} -- {percentage}%
             </p>
           </div>
 
           <button
             onClick={onMintAndShare}
-            className="w-full border-3 border-black bg-arb-blue px-8 py-4 font-sans text-base font-bold text-white shadow-[6px_6px_0px_0px_#000000] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none"
+            className="w-full rounded-2xl bg-arb-blue px-8 py-4 font-sans text-base font-bold text-white shadow-lg shadow-arb-blue/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-arb-blue/30 active:translate-y-0 active:shadow-md"
           >
             {"Mint OG NFT & Share"}
           </button>

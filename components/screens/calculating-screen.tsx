@@ -33,9 +33,9 @@ export function CalculatingScreen({ onComplete }: CalculatingScreenProps) {
     <AnimatedBackground variant="dark">
       <div className="flex min-h-[100dvh] flex-col items-center justify-center px-6">
         <div className="flex flex-col items-center">
-          {/* Spinning square */}
+          {/* Spinning rounded square */}
           <div
-            className="mb-8 h-14 w-14 animate-spin border-3 border-arb-blue bg-arb-blue/20"
+            className="mb-8 h-14 w-14 animate-spin rounded-2xl border-2 border-arb-blue bg-arb-blue/20"
             style={{ animationDuration: "1.2s" }}
           />
 
@@ -43,14 +43,14 @@ export function CalculatingScreen({ onComplete }: CalculatingScreenProps) {
             Calculating your OG status...
           </h2>
 
-          <div className="h-3 w-56 border-2 border-white/20 bg-navy-dark">
+          <div className="h-2 w-56 overflow-hidden rounded-full bg-white/10">
             <div
-              className="h-full bg-arb-blue transition-all duration-100"
+              className="h-full rounded-full bg-arb-blue transition-all duration-100"
               style={{ width: `${progress}%` }}
             />
           </div>
 
-          <p className="mt-4 font-sans text-xs text-white/60">
+          <p className="mt-4 font-sans text-xs text-white/50">
             {progress}%
           </p>
         </div>

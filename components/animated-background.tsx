@@ -9,7 +9,7 @@ export function AnimatedBackground({ variant = "light", children }: AnimatedBack
   const isDark = variant === "dark"
 
   return (
-    <div className={`relative min-h-[100dvh] overflow-hidden ${isDark ? "bg-navy-texture" : "bg-texture-light"}`}>
+    <div className={`relative min-h-[100dvh] overflow-hidden ${isDark ? "bg-navy-warm" : "bg-texture-warm"}`}>
       {/* Floating orbs */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
         <div
@@ -34,6 +34,13 @@ export function AnimatedBackground({ variant = "light", children }: AnimatedBack
             isDark ? "bg-arb-blue/5" : "bg-navy/3"
           }`}
           style={{ animationDelay: "-1s" }}
+        />
+        {/* Extra warm accent orb */}
+        <div
+          className={`animate-float-slow absolute top-[45%] left-[50%] h-64 w-64 rounded-full blur-3xl ${
+            isDark ? "bg-arb-blue/4" : "bg-arb-blue/4"
+          }`}
+          style={{ animationDelay: "-3s" }}
         />
       </div>
 
