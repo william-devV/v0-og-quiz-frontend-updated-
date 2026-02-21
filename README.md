@@ -1,5 +1,17 @@
 # OG Quiz — Arbitrum OG Verification Mini-App
 
+___________
+Feb 21 7:03pm changes to be made letter
+
+-- on the splash screen, there a tiny arbitrum quiz, remove it
+
+
+
+--- on the welcome screen, change the OG Level from hard to med-easy
+
+
+____________
+
 A Web3 quiz mini-app that challenges users to prove their Arbitrum OG status. Pass the quiz, mint a verifiable NFT badge, and share your proof on Farcaster.
 
 ---
