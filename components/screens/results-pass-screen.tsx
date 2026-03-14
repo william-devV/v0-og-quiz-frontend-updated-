@@ -8,6 +8,7 @@ interface ResultsPassScreenProps {
   total: number
   hasMinted?: boolean
   onMintAndShare: () => void
+  onReview: () => void
 }
 
 export function ResultsPassScreen({
@@ -15,6 +16,7 @@ export function ResultsPassScreen({
   total,
   hasMinted = false,
   onMintAndShare,
+  onReview,
 }: ResultsPassScreenProps) {
   const percentage = Math.round((score / total) * 100)
   const [shouldShake, setShouldShake] = useState(false)
@@ -60,11 +62,18 @@ export function ResultsPassScreen({
             They were right about you, you really are an OG.
           </p>
 
-          <div className="mb-10 w-full rounded-2xl bg-arb-blue p-6 shadow-lg shadow-arb-blue/20">
+          <div className="mb-8 w-full rounded-2xl bg-arb-blue p-6 shadow-lg shadow-arb-blue/20">
             <p className="text-center font-sans text-3xl font-bold text-white">
               {score} / {total} -- {percentage}%
             </p>
           </div>
+
+          <button
+            onClick={onReview}
+            className="mb-6 font-sans text-sm font-medium italic text-arb-blue underline underline-offset-4 transition-colors hover:text-arb-blue/80"
+          >
+            Review Your Answers
+          </button>
 
           <button
             onClick={handleButtonClick}
