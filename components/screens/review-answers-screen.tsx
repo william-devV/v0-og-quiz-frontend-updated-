@@ -49,13 +49,11 @@ export function ReviewAnswersScreen({
         <div className="flex flex-1 flex-col items-center px-4 py-6 pb-8">
           <div className="mx-auto w-full max-w-md">
             {/* Summary */}
-            <div className="mb-6 rounded-2xl bg-arb-blue p-6 shadow-lg shadow-arb-blue/20">
-              <p className="text-center font-sans text-sm text-white/80 mb-2">
-                Score
-              </p>
-              <p className="text-center font-sans text-3xl font-bold text-white">
-                {correctCount} / {questions.length} -- {percentage}%
-              </p>
+            <div className="mb-6 flex items-center justify-center gap-3 rounded-xl bg-arb-blue/10 border border-arb-blue/20 px-5 py-3">
+              <span className="font-sans text-xs font-medium text-navy/50 uppercase tracking-widest">Score</span>
+              <span className="font-sans text-base font-bold text-arb-blue">
+                {correctCount} / {questions.length} — {percentage}%
+              </span>
             </div>
 
             {/* Questions list */}
@@ -97,40 +95,15 @@ export function ReviewAnswersScreen({
 
                       <div className="space-y-2">
                         {question.options.map((option, optIdx) => {
-                          const isCorrectAnswer = optIdx === question.correctIndex
-                          const isSelected =
-                            optIdx === question.selectedIndex
-
                           return (
                             <div
                               key={optIdx}
-                              className={`flex items-start gap-2 rounded-lg px-3 py-2 font-sans text-xs ${
-                                isCorrectAnswer
-                                  ? "bg-green-100 text-green-900"
-                                  : isSelected && !isCorrect
-                                    ? "bg-red-100 text-red-900"
-                                    : "bg-navy/5 text-navy/70"
-                              }`}
+                              className="flex items-start gap-2 rounded-lg px-3 py-2 font-sans text-xs bg-navy/5 text-navy/70"
                             >
                               <span className="shrink-0 font-bold">
                                 {String.fromCharCode(65 + optIdx)}.
                               </span>
                               <span className="flex-1">{option}</span>
-                              {isCorrectAnswer && isCorrect && (
-                                <span className="shrink-0 text-green-600 font-bold">
-                                  ✓
-                                </span>
-                              )}
-                              {isCorrectAnswer && !isCorrect && (
-                                <span className="shrink-0 text-green-600 font-bold">
-                                  correct
-                                </span>
-                              )}
-                              {isSelected && !isCorrect && (
-                                <span className="shrink-0 text-red-600 font-bold">
-                                  ✗
-                                </span>
-                              )}
                             </div>
                           )
                         })}
