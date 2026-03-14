@@ -8,6 +8,7 @@ interface ResultsFailScreenProps {
   total: number
   onRetry: () => void
   onExit: () => void
+  onReview: () => void
 }
 
 export function ResultsFailScreen({
@@ -15,6 +16,7 @@ export function ResultsFailScreen({
   total,
   onRetry,
   onExit,
+  onReview,
 }: ResultsFailScreenProps) {
   const percentage = Math.round((score / total) * 100)
   const [shouldShake, setShouldShake] = useState(false)
@@ -48,11 +50,18 @@ export function ResultsFailScreen({
             </p>
           </div>
 
-          <p className="mb-8 font-sans text-sm text-navy/40">
+          <p className="mb-6 font-sans text-sm text-navy/40">
             You need 14/20 to qualify. Study up.
           </p>
 
-          <div className="flex w-full flex-col gap-3">
+          <button
+            onClick={onReview}
+            className="mb-8 font-sans text-sm font-medium italic text-arb-blue underline underline-offset-4 transition-colors hover:text-arb-blue/80"
+          >
+            Review Your Answers
+          </button>
+
+          <div className="flex w-full flex-col gap-3 mt-4">
             <button
               onClick={onRetry}
               className="w-full rounded-xl bg-arb-blue px-8 py-4 font-sans text-base font-bold text-white shadow-md shadow-arb-blue/20 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-arb-blue/25 active:translate-y-0 active:shadow-sm"

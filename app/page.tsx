@@ -9,6 +9,7 @@ import { CalculatingScreen } from "@/components/screens/calculating-screen"
 import { ResultsPassScreen } from "@/components/screens/results-pass-screen"
 import { ResultsFailScreen } from "@/components/screens/results-fail-screen"
 import { MintSuccessScreen } from "@/components/screens/mint-success-screen"
+import { ReviewAnswersScreen } from "@/components/screens/review-answers-screen"
 import { quizQuestions } from "@/lib/quiz-data"
 
 type ScreenName =
@@ -20,18 +21,29 @@ type ScreenName =
   | "results-pass"
   | "results-fail"
   | "mint-success"
+  | "review-answers"
 
 const PASS_THRESHOLD = 14
 const TOTAL_QUESTIONS = 20
+
+interface QuestionAnswer {
+  question: string
+  options: string[]
+  correctIndex: number
+  selectedIndex: number | null
+}
 
 export default function Home() {
   const [currentScreen, setCurrentScreen] = useState<ScreenName>("splash")
   const [score, setScore] = useState(0)
   const [hasMinted, setHasMinted] = useState(false)
+  const [userAnswers, setUserAnswers] = useState<QuestionAnswer[]>([])
+  const [reviewFrom, setReviewFrom] = useState<"fail" | "pass">("fail")
 
   const handleQuizComplete = useCallback(
-    (finalScore: number) => {
+    (finalScore: number, answers: QuestionAnswer[]) => {
       setScore(finalScore)
+      setUserAnswers(answers)
       setCurrentScreen("calculating")
     },
     []
@@ -67,6 +79,24 @@ export default function Home() {
     setCurrentScreen("results-pass")
   }, [])
 
+  const handleReviewFromFail = useCallback(() => {
+    setReviewFrom("fail")
+    setCurrentScreen("review-answers")
+  }, [])
+
+  const handleReviewFromPass = useCallback(() => {
+    setReviewFrom("pass")
+    setCurrentScreen("review-answers")
+  }, [])
+
+  const handleBackFromReview = useCallback(() => {
+    if (reviewFrom === "fail") {
+      setCurrentScreen("results-fail")
+    } else {
+      setCurrentScreen("results-pass")
+    }
+  }, [reviewFrom])
+
   return (
     <main>
       {currentScreen === "splash" && (
@@ -101,6 +131,7 @@ export default function Home() {
           total={TOTAL_QUESTIONS}
           hasMinted={hasMinted}
           onMintAndShare={handleMintAndShare}
+          onReview={handleReviewFromPass}
         />
       )}
 
@@ -110,11 +141,19 @@ export default function Home() {
           total={TOTAL_QUESTIONS}
           onRetry={handleRetry}
           onExit={handleExit}
+          onReview={handleReviewFromFail}
         />
       )}
 
       {currentScreen === "mint-success" && (
         <MintSuccessScreen onExit={handleMintDismiss} />
+      )}
+
+      {currentScreen === "review-answers" && (
+        <ReviewAnswersScreen
+          questions={userAnswers}
+          onBack={handleBackFromReview}
+        />
       )}
     </main>
   )

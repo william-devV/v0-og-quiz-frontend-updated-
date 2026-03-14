@@ -69,7 +69,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             style={{ animationDelay: "0.4s" }}
           >
             <span className="rounded-full border border-arb-blue/20 bg-arb-blue/8 px-4 py-1 font-sans text-[11px] font-bold tracking-widest text-arb-blue uppercase">
-              OG Level: Hard
+              OG Level: MED-EASY
             </span>
             <button
               onClick={onStart}

@@ -9,9 +9,16 @@ export interface QuizQuestion {
   correctIndex: number
 }
 
+interface QuestionAnswer {
+  question: string
+  options: string[]
+  correctIndex: number
+  selectedIndex: number | null
+}
+
 interface QuizScreenProps {
   questions: QuizQuestion[]
-  onComplete: (score: number) => void
+  onComplete: (score: number, answers: QuestionAnswer[]) => void
 }
 
 const TIMER_SECONDS = 15
@@ -37,6 +44,14 @@ export function QuizScreen({ questions, onComplete }: QuizScreenProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
   const [score, setScore] = useState(0)
   const [timeLeft, setTimeLeft] = useState(TIMER_SECONDS)
+  const [userAnswers, setUserAnswers] = useState<QuestionAnswer[]>(
+    questions.map((q) => ({
+      question: q.question,
+      options: q.options,
+      correctIndex: q.correctIndex,
+      selectedIndex: null,
+    }))
+  )
 
   const totalQuestions = questions.length
   const currentQuestion = questions[currentIndex]
@@ -47,18 +62,26 @@ export function QuizScreen({ questions, onComplete }: QuizScreenProps) {
     const newScore =
       selectedAnswer === currentQuestion.correctIndex ? score + 1 : score
 
+    // Update user answers
+    const updatedAnswers = [...userAnswers]
+    updatedAnswers[currentIndex] = {
+      ...updatedAnswers[currentIndex],
+      selectedIndex: selectedAnswer,
+    }
+    setUserAnswers(updatedAnswers)
+
     if (selectedAnswer === currentQuestion.correctIndex) {
       setScore(newScore)
     }
 
     if (currentIndex + 1 >= totalQuestions) {
-      onComplete(newScore)
+      onComplete(newScore, updatedAnswers)
     } else {
       setCurrentIndex((prev) => prev + 1)
       setSelectedAnswer(null)
       setTimeLeft(TIMER_SECONDS)
     }
-  }, [selectedAnswer, currentQuestion.correctIndex, score, currentIndex, totalQuestions, onComplete])
+  }, [selectedAnswer, currentQuestion.correctIndex, score, currentIndex, totalQuestions, onComplete, userAnswers])
 
   useEffect(() => {
     if (timeLeft <= 0) {

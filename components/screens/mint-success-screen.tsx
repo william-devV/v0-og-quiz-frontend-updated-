@@ -11,16 +11,25 @@ const MOCK_TX_HASH = "0x7a8f3e2b1c0d9e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b
 export function MintSuccessScreen({ onExit }: MintSuccessScreenProps) {
   const [copied, setCopied] = useState(false)
   const [shouldAnimate, setShouldAnimate] = useState(false)
+  const [secondsLeft, setSecondsLeft] = useState(3)
 
   useEffect(() => {
     const animTimer = setTimeout(() => setShouldAnimate(true), 50)
-    // Auto-dismiss after 3 seconds
-    const dismissTimer = setTimeout(onExit, 3000)
-    return () => {
-      clearTimeout(animTimer)
-      clearTimeout(dismissTimer)
+    return () => clearTimeout(animTimer)
+  }, [])
+
+  useEffect(() => {
+    if (secondsLeft <= 0) {
+      onExit()
+      return
     }
-  }, [onExit])
+
+    const dismissTimer = setInterval(() => {
+      setSecondsLeft((prev) => prev - 1)
+    }, 1000)
+
+    return () => clearInterval(dismissTimer)
+  }, [secondsLeft, onExit])
 
   const handleCopy = async () => {
     try {
@@ -90,7 +99,7 @@ export function MintSuccessScreen({ onExit }: MintSuccessScreenProps) {
           </a>
 
           <p className="mt-2 text-center font-sans text-xs text-white/30">
-            Returning to results in 3s...
+            Returning to results in {secondsLeft}s...
           </p>
         </div>
       </div>
