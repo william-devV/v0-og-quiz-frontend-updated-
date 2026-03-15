@@ -1,22 +1,25 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { sdk } from "@farcaster/miniapp-sdk"
 import { AnimatedBackground } from "@/components/animated-background"
 
 interface ResultsPassScreenProps {
   score: number
   total: number
   hasMinted?: boolean
+  isMinting?: boolean
+  mintError?: string | null
   onMintAndShare: () => void
-  onReview: () => void
 }
 
 export function ResultsPassScreen({
   score,
   total,
   hasMinted = false,
+  isMinting = false,
+  mintError = null,
   onMintAndShare,
-  onReview,
 }: ResultsPassScreenProps) {
   const percentage = Math.round((score / total) * 100)
   const [shouldShake, setShouldShake] = useState(false)
@@ -28,19 +31,19 @@ export function ResultsPassScreen({
 
   const handleButtonClick = () => {
     if (hasMinted) {
-      // Share on Farcaster
-      const shareText = encodeURIComponent(
-        `I scored ${score}/${total} (${percentage}%) on the Arbitrum OG Quiz! Think you can beat me?`
-      )
-      window.open(
-        `https://warpcast.com/~/compose?text=${shareText}`,
-        "_blank",
-        "noopener,noreferrer"
-      )
+      sdk.actions.composeCast({
+        text: `I scored ${score}/${total} (${percentage}%) on the Arbitrum OG Quiz! 🔵\n\nThink you're OG enough to beat me? Take the quiz:`,
+      })
     } else {
       onMintAndShare()
     }
   }
+
+  const buttonLabel = hasMinted
+    ? "Share Your Score"
+    : isMinting
+      ? "Minting..."
+      : "Mint OG NFT & Share"
 
   return (
     <AnimatedBackground variant="light">
@@ -69,18 +72,19 @@ export function ResultsPassScreen({
           </div>
 
           <button
-            onClick={onReview}
-            className="mb-6 font-sans text-sm font-medium italic text-arb-blue underline underline-offset-4 transition-colors hover:text-arb-blue/80"
+            type="button"
+            onClick={handleButtonClick}
+            disabled={isMinting}
+            className="w-full rounded-2xl bg-arb-blue px-8 py-4 font-sans text-base font-bold text-white shadow-lg shadow-arb-blue/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-arb-blue/30 active:translate-y-0 active:shadow-md disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
           >
-            Review Your Answers
+            {buttonLabel}
           </button>
 
-          <button
-            onClick={handleButtonClick}
-            className="w-full rounded-2xl bg-arb-blue px-8 py-4 font-sans text-base font-bold text-white shadow-lg shadow-arb-blue/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-arb-blue/30 active:translate-y-0 active:shadow-md"
-          >
-            {hasMinted ? "Share Your Score" : "Mint OG NFT & Share"}
-          </button>
+          {mintError && (
+            <p className="mt-3 text-center font-sans text-sm font-medium text-red-500">
+              {mintError}
+            </p>
+          )}
         </div>
       </div>
     </AnimatedBackground>

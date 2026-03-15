@@ -4,21 +4,19 @@ import { useState, useEffect, useCallback } from "react"
 import { AnimatedBackground } from "@/components/animated-background"
 
 export interface QuizQuestion {
+  id: string
   question: string
   options: string[]
-  correctIndex: number
 }
 
-interface QuestionAnswer {
-  question: string
-  options: string[]
-  correctIndex: number
+export interface RawAnswer {
+  questionId: string
   selectedIndex: number | null
 }
 
 interface QuizScreenProps {
   questions: QuizQuestion[]
-  onComplete: (score: number, answers: QuestionAnswer[]) => void
+  onComplete: (answers: RawAnswer[]) => void
 }
 
 const TIMER_SECONDS = 15
@@ -42,27 +40,17 @@ function getTimerBarColor(seconds: number): string {
 export function QuizScreen({ questions, onComplete }: QuizScreenProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
-  const [score, setScore] = useState(0)
   const [timeLeft, setTimeLeft] = useState(TIMER_SECONDS)
-  const [userAnswers, setUserAnswers] = useState<QuestionAnswer[]>(
-    questions.map((q) => ({
-      question: q.question,
-      options: q.options,
-      correctIndex: q.correctIndex,
-      selectedIndex: null,
-    }))
+  const [userAnswers, setUserAnswers] = useState<RawAnswer[]>(
+    questions.map((q) => ({ questionId: q.id, selectedIndex: null }))
   )
 
   const totalQuestions = questions.length
   const currentQuestion = questions[currentIndex]
-  const progress = ((currentIndex) / totalQuestions) * 100
+  const progress = (currentIndex / totalQuestions) * 100
   const timerPercent = (timeLeft / TIMER_SECONDS) * 100
 
   const handleNext = useCallback(() => {
-    const newScore =
-      selectedAnswer === currentQuestion.correctIndex ? score + 1 : score
-
-    // Update user answers
     const updatedAnswers = [...userAnswers]
     updatedAnswers[currentIndex] = {
       ...updatedAnswers[currentIndex],
@@ -70,18 +58,14 @@ export function QuizScreen({ questions, onComplete }: QuizScreenProps) {
     }
     setUserAnswers(updatedAnswers)
 
-    if (selectedAnswer === currentQuestion.correctIndex) {
-      setScore(newScore)
-    }
-
     if (currentIndex + 1 >= totalQuestions) {
-      onComplete(newScore, updatedAnswers)
+      onComplete(updatedAnswers)
     } else {
       setCurrentIndex((prev) => prev + 1)
       setSelectedAnswer(null)
       setTimeLeft(TIMER_SECONDS)
     }
-  }, [selectedAnswer, currentQuestion.correctIndex, score, currentIndex, totalQuestions, onComplete, userAnswers])
+  }, [selectedAnswer, currentIndex, totalQuestions, onComplete, userAnswers])
 
   useEffect(() => {
     if (timeLeft <= 0) {

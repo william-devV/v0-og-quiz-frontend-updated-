@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { AnimatedBackground } from "@/components/animated-background"
 
@@ -7,7 +8,30 @@ interface WelcomeScreenProps {
   onStart: () => void
 }
 
+interface Stats {
+  total: number
+  passed: number
+  passRate: number
+}
+
 export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
+  const [stats, setStats] = useState<Stats | null>(null)
+
+  useEffect(() => {
+    fetch("/api/stats")
+      .then((r) => r.json())
+      .then((data: Stats) => setStats(data))
+      .catch(() => {})
+  }, [])
+
+  const statLabels = stats
+    ? [
+        `${stats.total.toLocaleString()} attempted`,
+        `${stats.passed.toLocaleString()} passed`,
+        `Only ${stats.passRate}% make it`,
+      ]
+    : ["2,341 attempted", "847 passed", "Only 36% make it"]
+
   return (
     <AnimatedBackground variant="light">
       <div className="flex min-h-[100dvh] flex-col items-center justify-center px-6 py-10">
@@ -16,7 +40,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           <div className="animate-fade-in-up mb-6">
             <div className="relative h-20 w-20 overflow-hidden rounded-2xl border-2 border-navy/10 shadow-lg">
               <Image
-                src="/arbitrum-logo.svg"
+                src="/arbitrum-logo.png"
                 alt="Arbitrum logo"
                 width={80}
                 height={80}
@@ -49,11 +73,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             className="animate-fade-in-up mt-8 flex flex-wrap items-center justify-center gap-2"
             style={{ animationDelay: "0.3s" }}
           >
-            {[
-              "2,341 attempted",
-              "847 passed",
-              "Only 36% make it",
-            ].map((stat) => (
+            {statLabels.map((stat) => (
               <span
                 key={stat}
                 className="rounded-full border border-navy/12 bg-white/80 px-4 py-1.5 font-sans text-xs font-semibold text-navy/70 shadow-sm backdrop-blur-sm"

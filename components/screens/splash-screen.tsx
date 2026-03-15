@@ -31,7 +31,7 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
         <div className="animate-bob">
           <div className="relative h-24 w-24 overflow-hidden rounded-3xl border-2 border-white/15 shadow-lg shadow-arb-blue/20 animate-pulse-glow">
             <Image
-              src="/arbitrum-logo.svg"
+              src="/arbitrum-logo.png"
               alt="Arbitrum logo"
               width={96}
               height={96}

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Space_Grotesk, DM_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { Web3Provider } from '@/providers/web3-provider'
+import { FarcasterInit } from '@/components/farcaster-init'
 import './globals.css'
 
 const _spaceGrotesk = Space_Grotesk({
@@ -50,7 +52,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${_spaceGrotesk.variable} ${_dmSans.variable} font-sans antialiased`}>
-        {children}
+        <Web3Provider>
+          <FarcasterInit />
+          {children}
+        </Web3Provider>
         <Analytics />
       </body>
     </html>
