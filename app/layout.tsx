@@ -49,13 +49,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const fcFrame = JSON.stringify({
-    version: 'next',
+  const fcMiniApp = JSON.stringify({
+    version: '1',
     imageUrl: 'https://arbitrum-og-quiz.vercel.app/manifest_imgs/hero_img.png',
     button: {
       title: 'Take Quiz',
       action: {
-        type: 'launch_frame',
+        type: 'launch_miniapp',
         name: 'Arbitrum OG Quiz',
         url: 'https://arbitrum-og-quiz.vercel.app',
         splashImageUrl: 'https://arbitrum-og-quiz.vercel.app/manifest_imgs/splash_img.png',
@@ -67,7 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="fc:frame" content={fcFrame} />
+        <meta name="fc:miniapp" content={fcMiniApp} />
       </head>
       <body className={`${_spaceGrotesk.variable} ${_dmSans.variable} font-sans antialiased`}>
         <Web3Provider>

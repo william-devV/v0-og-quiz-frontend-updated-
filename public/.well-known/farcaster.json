@@ -4,7 +4,7 @@
     "payload": "eyJkb21haW4iOiJhcmJpdHJ1bS1vZy1xdWl6LnZlcmNlbC5hcHAifQ",
     "signature": "5LxhfAYevB9VkHljhfXGXtCNgNcSs_GcbBIlQg8h7McfysYmYNxXlF4qQOnSGuvNfMfHpbBrDqkDJbvMSWOwNhs"
   },
-  "frame": {
+  "miniapp": {
     "version": "1",
     "name": "Arbitrum OG Quiz",
     "iconUrl": "https://arbitrum-og-quiz.vercel.app/manifest_imgs/quiz_logo.png",
