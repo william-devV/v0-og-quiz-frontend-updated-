@@ -30,7 +30,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         `${stats.passed.toLocaleString()} passed`,
         `Only ${stats.passRate}% make it`,
       ]
-    : ["2,341 attempted", "847 passed", "Only 36% make it"]
+    : ["0 attempted", "0 passed", "Only 0% make it"]
 
   return (
     <AnimatedBackground variant="light">

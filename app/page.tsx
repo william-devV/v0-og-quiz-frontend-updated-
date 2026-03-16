@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect, useRef } from "react"
-import { useAccount, useWriteContract } from "wagmi"
+import { useAccount, useConnect, useWriteContract } from "wagmi"
 import { SplashScreen } from "@/components/screens/splash-screen"
 import { WelcomeScreen } from "@/components/screens/welcome-screen"
 import { RulesScreen } from "@/components/screens/rules-screen"
@@ -61,6 +61,7 @@ export default function Home() {
   const [calculatingDone, setCalculatingDone] = useState(false)
 
   const { address: walletAddress } = useAccount()
+  const { connectAsync, connectors } = useConnect()
   const { writeContractAsync } = useWriteContract()
 
   // Navigate to results once both the animation and the API call are done
@@ -157,15 +158,26 @@ export default function Home() {
   }
 
   const handleMintAndShare = useCallback(async () => {
-    if (!walletAddress) return
     setIsMinting(true)
     setMintError(null)
     try {
+      // Connect wallet on demand if not already connected
+      let address = walletAddress
+      if (!address) {
+        const result = await connectAsync({ connector: connectors[0] })
+        address = result.accounts[0]
+      }
+      if (!address) {
+        setMintError("Could not connect wallet. Please try again.")
+        setTimeout(() => setMintError(null), 4000)
+        setIsMinting(false)
+        return
+      }
       // Get authorization signature from server
       const authRes = await fetch("/api/mint/authorize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ walletAddress }),
+        body: JSON.stringify({ walletAddress: address }),
       })
 
       if (!authRes.ok) {
@@ -190,7 +202,7 @@ export default function Home() {
       fetch("/api/mint/record", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ walletAddress, transactionHash: txHash, tokenId }),
+        body: JSON.stringify({ walletAddress: address, transactionHash: txHash, tokenId }),
       }).catch(() => {})
 
       setMintTxHash(txHash)
@@ -203,7 +215,7 @@ export default function Home() {
     } finally {
       setIsMinting(false)
     }
-  }, [walletAddress, writeContractAsync])
+  }, [walletAddress, connectAsync, connectors, writeContractAsync])
 
   const handleMintDismiss = useCallback(() => {
     setHasMinted(true)
