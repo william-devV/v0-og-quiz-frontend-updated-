@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect, useRef } from "react"
-import { useAccount, useWriteContract } from "wagmi"
+import { useAccount, useConnect, useWriteContract } from "wagmi"
 import { SplashScreen } from "@/components/screens/splash-screen"
 import { WelcomeScreen } from "@/components/screens/welcome-screen"
 import { RulesScreen } from "@/components/screens/rules-screen"
@@ -61,7 +61,15 @@ export default function Home() {
   const [calculatingDone, setCalculatingDone] = useState(false)
 
   const { address: walletAddress } = useAccount()
+  const { connect, connectors } = useConnect()
   const { writeContractAsync } = useWriteContract()
+
+  // Auto-connect to Farcaster wallet on mount (silent — no connect button needed)
+  useEffect(() => {
+    if (connectors[0]) {
+      connect({ connector: connectors[0] })
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Navigate to results once both the animation and the API call are done
   useEffect(() => {
