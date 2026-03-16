@@ -1,0 +1,18 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "frame": {
+    "version": "1",
+    "name": "Arbitrum OG Quiz",
+    "iconUrl": "https://arbitrum-og-quiz.vercel.app/manifest_imgs/quiz_logo.png",
+    "homeUrl": "https://arbitrum-og-quiz.vercel.app",
+    "imageUrl": "https://arbitrum-og-quiz.vercel.app/manifest_imgs/hero_img.png",
+    "buttonTitle": "Take the Quiz",
+    "splashImageUrl": "https://arbitrum-og-quiz.vercel.app/manifest_imgs/splash_img.png",
+    "splashBackgroundColor": "#1B2559",
+    "webhookUrl": "https://arbitrum-og-quiz.vercel.app/api/webhook"
+  }
+}
