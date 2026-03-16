@@ -1,8 +1,8 @@
 {
   "accountAssociation": {
-    "header": "",
-    "payload": "",
-    "signature": ""
+    "header": "eyJmaWQiOjc0NzIwMCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDEwNDc1MkQ2M0FEMjU3NTBBNzc3NUY3NUZGY2RFNzVDRDZkYWJGMUEifQ",
+    "payload": "eyJkb21haW4iOiJhcmJpdHJ1bS1vZy1xdWl6LnZlcmNlbC5hcHAifQ",
+    "signature": "5LxhfAYevB9VkHljhfXGXtCNgNcSs/GcbBIlQg8h7McfysYmYNxXlF4qQOnSGuvNfMfHpbBrDqkDJbvMSWOwNhs="
   },
   "frame": {
     "version": "1",
@@ -10,9 +10,18 @@
     "iconUrl": "https://arbitrum-og-quiz.vercel.app/manifest_imgs/quiz_logo.png",
     "homeUrl": "https://arbitrum-og-quiz.vercel.app",
     "imageUrl": "https://arbitrum-og-quiz.vercel.app/manifest_imgs/hero_img.png",
-    "buttonTitle": "Take the Quiz",
+    "buttonTitle": "Take Quiz",
     "splashImageUrl": "https://arbitrum-og-quiz.vercel.app/manifest_imgs/splash_img.png",
-    "splashBackgroundColor": "#1B2559",
-    "webhookUrl": "https://arbitrum-og-quiz.vercel.app/api/webhook"
+    "splashBackgroundColor": "#e2eefe",
+    "webhookUrl": "https://arbitrum-og-quiz.vercel.app/api/webhook",
+    "primaryCategory": "games",
+    "tags": ["social", "game", "quiz", "arbitrum"],
+    "tagline": "Prove you're an Arbitrum OG",
+    "ogTitle": "Arbitrum OG Quiz",
+    "ogDescription": "Take the quiz and prove that you're an Arbitrum OG.",
+    "description": "Answer 20 questions on Arbitrum's Infra, Lore and Ecosytem and prove that you're an Arbitrum OG.",
+    "subtitle": "Take the quiz and prove that you're an Arbitrum OG.",
+    "heroImageUrl": "https://arbitrum-og-quiz.vercel.app/manifest_imgs/hero_img.png",
+    "ogImageUrl": "https://arbitrum-og-quiz.vercel.app/manifest_imgs/hero_img.png"
   }
 }
