@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import { sdk } from "@farcaster/miniapp-sdk"
 import { AnimatedBackground } from "@/components/animated-background"
 
 interface WelcomeScreenProps {
@@ -22,6 +23,13 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
       .then((r) => r.json())
       .then((data: Stats) => setStats(data))
       .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      sdk.actions.addMiniApp().catch(() => {})
+    }, 3000)
+    return () => clearTimeout(timer)
   }, [])
 
   const statLabels = stats
