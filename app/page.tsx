@@ -182,7 +182,11 @@ export default function Home() {
 
       if (!authRes.ok) {
         const err = await authRes.json()
-        console.error("Mint authorization failed:", err)
+        const message = err.error === "Already minted"
+          ? "This wallet has already minted."
+          : err.error ?? "Authorization failed. Please try again."
+        setMintError(message)
+        setTimeout(() => setMintError(null), 4000)
         setIsMinting(false)
         return
       }

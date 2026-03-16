@@ -26,8 +26,8 @@ export async function POST(request: Request) {
   const supabase = createServerSupabaseClient()
   const normalized = walletAddress.toLowerCase()
 
-  // Verify the wallet has a passing attempt
-  const { data: attempt } = await supabase
+  // Check for a passing attempt linked to this wallet
+  let { data: attempt } = await supabase
     .from("attempts")
     .select("id")
     .ilike("wallet_address", normalized)
@@ -35,9 +35,30 @@ export async function POST(request: Request) {
     .limit(1)
     .maybeSingle()
 
+  // If no linked attempt found, claim the most recent unlinked passing attempt
+  // (wallet wasn't connected when quiz was taken)
+  if (!attempt) {
+    const { data: unlinked } = await supabase
+      .from("attempts")
+      .select("id")
+      .is("wallet_address", null)
+      .eq("passed", true)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+    if (unlinked) {
+      await supabase
+        .from("attempts")
+        .update({ wallet_address: walletAddress })
+        .eq("id", unlinked.id)
+      attempt = unlinked
+    }
+  }
+
   if (!attempt) {
     return NextResponse.json(
-      { error: "No passing attempt found for this wallet" },
+      { error: "No passing attempt found. Please complete the quiz first." },
       { status: 403 }
     )
   }
