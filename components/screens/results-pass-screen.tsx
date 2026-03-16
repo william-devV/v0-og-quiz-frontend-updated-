@@ -33,6 +33,7 @@ export function ResultsPassScreen({
     if (hasMinted) {
       sdk.actions.composeCast({
         text: `I scored ${score}/${total} (${percentage}%) on the Arbitrum OG Quiz! 🔵\n\nThink you're OG enough to beat me? Take the quiz:`,
+        embeds: ["https://arbitrum-og-quiz.vercel.app"],
       })
     } else {
       onMintAndShare()
