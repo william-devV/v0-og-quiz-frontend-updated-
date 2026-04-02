@@ -7,7 +7,7 @@ export function FarcasterInit() {
   useEffect(() => {
     sdk.actions.ready()
     const timer = setTimeout(() => {
-      sdk.actions.addFrame().catch(() => {})
+      sdk.actions.addMiniApp().catch(() => {})
     }, 1500)
     return () => clearTimeout(timer)
   }, [])

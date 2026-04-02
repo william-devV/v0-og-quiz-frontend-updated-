@@ -13,7 +13,7 @@ interface NotificationDetails {
 }
 
 interface WebhookPayload {
-  event: "frame_added" | "frame_removed" | "notifications_enabled" | "notifications_disabled"
+  event: "miniapp_added" | "miniapp_removed" | "notifications_enabled" | "notifications_disabled"
   notificationDetails?: NotificationDetails
 }
 
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
   const supabase = createServerSupabaseClient()
 
   switch (payload.event) {
-    case "frame_added":
+    case "miniapp_added":
     case "notifications_enabled": {
       if (payload.notificationDetails) {
         const { token, url } = payload.notificationDetails
@@ -101,7 +101,7 @@ export async function POST(request: Request) {
       break
     }
 
-    case "frame_removed":
+    case "miniapp_removed":
     case "notifications_disabled": {
       await supabase.from("notification_tokens").delete().eq("fid", fid)
       break
