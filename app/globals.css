@@ -230,6 +230,20 @@
   animation: marquee 25s linear infinite;
 }
 
+/* Periodic subtle shake for badge button */
+@keyframes badge-nudge {
+  0%, 100% { translate: 0 0; }
+  20% { translate: -3px 0; }
+  40% { translate: 3px 0; }
+  60% { translate: -2px 0; }
+  80% { translate: 2px 0; }
+}
+
+.animate-badge-nudge {
+  animation: badge-nudge 0.4s ease-in-out;
+  animation-iteration-count: 1;
+}
+
 /* Gentle fade-in-up for welcome elements */
 @keyframes fade-in-up {
   0% { opacity: 0; transform: translateY(18px); }

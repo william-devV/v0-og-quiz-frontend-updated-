@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { sdk } from "@farcaster/miniapp-sdk"
 import { AnimatedBackground } from "@/components/animated-background"
 
@@ -17,6 +18,9 @@ interface Stats {
 
 export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   const [stats, setStats] = useState<Stats | null>(null)
+  const [isShaking, setIsShaking] = useState(false)
+  const router = useRouter()
+  const shakeIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     fetch("/api/stats")
@@ -30,6 +34,23 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
       sdk.actions.addMiniApp().catch(() => {})
     }, 3000)
     return () => clearTimeout(timer)
+  }, [])
+
+  // Periodic shake: fires every 4 seconds, briefly shakes for 400ms
+  useEffect(() => {
+    const schedule = () => {
+      shakeIntervalRef.current = setTimeout(() => {
+        setIsShaking(true)
+        setTimeout(() => {
+          setIsShaking(false)
+          schedule()
+        }, 400)
+      }, 4000)
+    }
+    schedule()
+    return () => {
+      if (shakeIntervalRef.current) clearTimeout(shakeIntervalRef.current)
+    }
   }, [])
 
   const statLabels = stats
@@ -100,11 +121,20 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
               OG Level: MED-EASY
             </span>
             <button
+              type="button"
               onClick={onStart}
               className="group relative w-full overflow-hidden rounded-2xl bg-arb-blue px-8 py-5 font-sans text-lg font-bold text-white shadow-lg shadow-arb-blue/25 transition-all hover:shadow-xl hover:shadow-arb-blue/30 hover:-translate-y-0.5 active:translate-y-0 active:shadow-md"
             >
               <span className="relative z-10">Take the Quiz</span>
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => router.push("/badge")}
+              className={`w-full rounded-2xl border-2 border-arb-blue/30 bg-white/70 px-8 py-4 font-sans text-base font-semibold text-arb-blue shadow-sm backdrop-blur-sm transition-all hover:border-arb-blue/60 hover:bg-white/90 hover:-translate-y-0.5 active:translate-y-0${isShaking ? " animate-badge-nudge" : ""}`}
+            >
+              View OG Badge
             </button>
           </div>
         </div>
