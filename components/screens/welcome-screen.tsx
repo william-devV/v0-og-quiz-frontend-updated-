@@ -123,7 +123,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             <button
               type="button"
               onClick={onStart}
-              className="group relative w-full overflow-hidden rounded-2xl bg-arb-blue px-8 py-5 font-sans text-lg font-bold text-white shadow-lg shadow-arb-blue/25 transition-all hover:shadow-xl hover:shadow-arb-blue/30 hover:-translate-y-0.5 active:translate-y-0 active:shadow-md"
+              className={`group relative w-full overflow-hidden rounded-2xl bg-arb-blue px-8 py-4 font-sans text-base font-bold text-white shadow-lg shadow-arb-blue/25 transition-all hover:shadow-xl hover:shadow-arb-blue/30 hover:-translate-y-0.5 active:translate-y-0 active:shadow-md${isShaking ? " animate-badge-nudge" : ""}`}
             >
               <span className="relative z-10">Take the Quiz</span>
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
@@ -132,7 +132,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             <button
               type="button"
               onClick={() => router.push("/badge")}
-              className={`w-full rounded-xl border border-arb-blue/25 bg-white/60 px-6 py-2.5 font-sans text-sm font-medium text-arb-blue shadow-sm backdrop-blur-sm transition-all hover:border-arb-blue/50 hover:bg-white/80 hover:-translate-y-0.5 active:translate-y-0${isShaking ? " animate-badge-nudge" : ""}`}
+              className="w-full rounded-xl border border-arb-blue/25 bg-white/60 px-6 py-2.5 font-sans text-sm font-medium text-arb-blue shadow-sm backdrop-blur-sm transition-all hover:border-arb-blue/50 hover:bg-white/80 hover:-translate-y-0.5 active:translate-y-0"
             >
               View OG Badge
             </button>
