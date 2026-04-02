@@ -36,7 +36,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
     return () => clearTimeout(timer)
   }, [])
 
-  // Periodic shake: fires every 4 seconds, briefly shakes for 400ms
+  // Periodic shake: fires every 3 seconds exactly (500ms shake + 2500ms wait)
   useEffect(() => {
     const schedule = () => {
       shakeIntervalRef.current = setTimeout(() => {
@@ -44,8 +44,8 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         setTimeout(() => {
           setIsShaking(false)
           schedule()
-        }, 400)
-      }, 4000)
+        }, 500)
+      }, 2500)
     }
     schedule()
     return () => {
@@ -132,7 +132,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             <button
               type="button"
               onClick={() => router.push("/badge")}
-              className={`w-full rounded-2xl border-2 border-arb-blue/30 bg-white/70 px-8 py-4 font-sans text-base font-semibold text-arb-blue shadow-sm backdrop-blur-sm transition-all hover:border-arb-blue/60 hover:bg-white/90 hover:-translate-y-0.5 active:translate-y-0${isShaking ? " animate-badge-nudge" : ""}`}
+              className={`w-full rounded-xl border border-arb-blue/25 bg-white/60 px-6 py-2.5 font-sans text-sm font-medium text-arb-blue shadow-sm backdrop-blur-sm transition-all hover:border-arb-blue/50 hover:bg-white/80 hover:-translate-y-0.5 active:translate-y-0${isShaking ? " animate-badge-nudge" : ""}`}
             >
               View OG Badge
             </button>

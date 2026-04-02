@@ -42,7 +42,12 @@ interface SubmitResult {
 }
 
 export default function Home() {
-  const [currentScreen, setCurrentScreen] = useState<ScreenName>("splash")
+  const [currentScreen, setCurrentScreen] = useState<ScreenName>(() => {
+    if (typeof window !== "undefined" && window.location.search.includes("nosplash")) {
+      return "welcome"
+    }
+    return "splash"
+  })
   const [score, setScore] = useState(0)
   const [hasMinted, setHasMinted] = useState(false)
   const [userAnswers, setUserAnswers] = useState<ReviewAnswer[]>([])
