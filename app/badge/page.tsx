@@ -37,7 +37,10 @@ export default function BadgePage() {
       <div className="flex min-h-[100dvh] flex-col px-6 py-10">
         <button
           type="button"
-          onClick={() => router.push("/?nosplash=1")}
+          onClick={() => {
+            sessionStorage.setItem("skipSplash", "1")
+            router.push("/")
+          }}
           className="mb-8 self-start font-sans text-sm text-navy/50 underline underline-offset-4 transition-colors hover:text-navy"
         >
           ← Back

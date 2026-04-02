@@ -43,8 +43,12 @@ interface SubmitResult {
 
 export default function Home() {
   const [currentScreen, setCurrentScreen] = useState<ScreenName>(() => {
-    if (typeof window !== "undefined" && window.location.search.includes("nosplash")) {
-      return "welcome"
+    if (typeof window !== "undefined") {
+      const skip = sessionStorage.getItem("skipSplash")
+      if (skip) {
+        sessionStorage.removeItem("skipSplash")
+        return "welcome"
+      }
     }
     return "splash"
   })
