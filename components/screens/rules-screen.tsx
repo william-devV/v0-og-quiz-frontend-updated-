@@ -7,6 +7,7 @@ interface RulesScreenProps {
   onStart: () => void
   onBack: () => void
   isLoading?: boolean
+  loadError?: boolean
 }
 
 const rules = [
@@ -18,7 +19,7 @@ const rules = [
   "Quiz auto-submits when time expires",
 ]
 
-export function RulesScreen({ onStart, onBack, isLoading = false }: RulesScreenProps) {
+export function RulesScreen({ onStart, onBack, isLoading = false, loadError = false }: RulesScreenProps) {
   const [accepted, setAccepted] = useState(false)
 
   return (
@@ -44,6 +45,14 @@ export function RulesScreen({ onStart, onBack, isLoading = false }: RulesScreenP
               ))}
             </ul>
 
+            {loadError && (
+              <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+                <p className="font-sans text-sm font-medium text-red-600">
+                  Couldn't load questions. Check your connection and try again.
+                </p>
+              </div>
+            )}
+
             <label className="mt-8 flex cursor-pointer items-center gap-3 border-t border-navy/8 pt-6">
               <input
                 type="checkbox"
@@ -62,7 +71,7 @@ export function RulesScreen({ onStart, onBack, isLoading = false }: RulesScreenP
                 disabled={!accepted || isLoading}
                 className="w-full rounded-xl bg-arb-blue px-8 py-3.5 font-sans text-base font-bold text-white shadow-md shadow-arb-blue/20 transition-all enabled:hover:-translate-y-0.5 enabled:hover:shadow-lg enabled:hover:shadow-arb-blue/25 enabled:active:translate-y-0 enabled:active:shadow-sm disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                {isLoading ? "Loading..." : "Let's Go"}
+                {isLoading ? "Loading..." : loadError ? "Try Again" : "Let's Go"}
               </button>
 
               <button

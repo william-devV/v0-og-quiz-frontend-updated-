@@ -54,6 +54,7 @@ export default function Home() {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([])
   const [quizToken, setQuizToken] = useState("")
   const [isLoadingQuiz, setIsLoadingQuiz] = useState(false)
+  const [quizLoadError, setQuizLoadError] = useState(false)
 
   // Coordinate the calculating animation and the submit API response
   const submitResultRef = useRef<SubmitResult | null>(null)
@@ -73,8 +74,15 @@ export default function Home() {
     setCurrentScreen(result.passed ? "results-pass" : "results-fail")
   }, [calculatingDone, submitReady])
 
+  // Silently connect wallet when the pass screen appears
+  useEffect(() => {
+    if (currentScreen !== "results-pass" || walletAddress) return
+    connectAsync({ connector: connectors[0] }).catch(() => {})
+  }, [currentScreen, walletAddress, connectAsync, connectors])
+
   const handleStartQuiz = useCallback(async () => {
     setIsLoadingQuiz(true)
+    setQuizLoadError(false)
     try {
       const res = await fetch("/api/questions")
       const data = await res.json()
@@ -82,7 +90,7 @@ export default function Home() {
       setQuizToken(data.token)
       setCurrentScreen("quiz")
     } catch {
-      // stay on rules screen; user can try again
+      setQuizLoadError(true)
     } finally {
       setIsLoadingQuiz(false)
     }
@@ -255,6 +263,7 @@ export default function Home() {
           onStart={handleStartQuiz}
           onBack={() => setCurrentScreen("welcome")}
           isLoading={isLoadingQuiz}
+          loadError={quizLoadError}
         />
       )}
 

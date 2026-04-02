@@ -22,6 +22,31 @@ function base64urlDecode(str: string): string {
   return Buffer.from(padded, "base64").toString("utf-8")
 }
 
+function base64urlToBytes(str: string): Uint8Array {
+  const padded = str.replace(/-/g, "+").replace(/_/g, "/").padEnd(str.length + ((4 - (str.length % 4)) % 4), "=")
+  return new Uint8Array(Buffer.from(padded, "base64"))
+}
+
+async function verifyEd25519Signature(
+  publicKeyHex: string,
+  message: Uint8Array,
+  signature: Uint8Array
+): Promise<boolean> {
+  // Strip leading 0x if present
+  const hex = publicKeyHex.startsWith("0x") ? publicKeyHex.slice(2) : publicKeyHex
+  const keyBytes = new Uint8Array(Buffer.from(hex, "hex"))
+
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw",
+    keyBytes,
+    { name: "Ed25519" },
+    false,
+    ["verify"]
+  )
+
+  return crypto.subtle.verify("Ed25519", cryptoKey, signature, message)
+}
+
 export async function POST(request: Request) {
   let body: { header: string; payload: string; signature: string }
 
@@ -45,6 +70,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid payload encoding" }, { status: 400 })
   }
 
+  // Verify Ed25519 signature: message = "<header>.<payload>" as UTF-8 bytes
+  try {
+    const message = new TextEncoder().encode(`${body.header}.${body.payload}`)
+    const signature = base64urlToBytes(body.signature)
+    const valid = await verifyEd25519Signature(header.key, message, signature)
+    if (!valid) {
+      return NextResponse.json({ error: "Invalid signature" }, { status: 401 })
+    }
+  } catch {
+    return NextResponse.json({ error: "Signature verification failed" }, { status: 401 })
+  }
+
   const fid = header.fid
   if (!fid) {
     return NextResponse.json({ error: "Missing fid" }, { status: 400 })
@@ -55,7 +92,6 @@ export async function POST(request: Request) {
   switch (payload.event) {
     case "frame_added":
     case "notifications_enabled": {
-      // Store or update the notification token for this user
       if (payload.notificationDetails) {
         const { token, url } = payload.notificationDetails
         await supabase
@@ -67,7 +103,6 @@ export async function POST(request: Request) {
 
     case "frame_removed":
     case "notifications_disabled": {
-      // Remove the notification token — user no longer reachable
       await supabase.from("notification_tokens").delete().eq("fid", fid)
       break
     }
