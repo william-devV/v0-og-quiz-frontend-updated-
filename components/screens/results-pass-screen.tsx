@@ -32,7 +32,7 @@ export function ResultsPassScreen({
   const handleButtonClick = () => {
     if (hasMinted) {
       sdk.actions.composeCast({
-        text: `I scored ${score}/${total} (${percentage}%) on the Arbitrum OG Quiz! 🔵\n\nThink you're OG enough to beat me? Take the quiz:`,
+        text: `I scored ${score}/${total} (${percentage}%) on the Arbitrum OG Quiz! \u{1F535}\n\nThink you're OG enough to beat me? Take the quiz:`,
         embeds: ["https://arbitrum-og-quiz.vercel.app"],
       })
     } else {
@@ -64,7 +64,7 @@ export function ResultsPassScreen({
           </h1>
           <p className="mb-8 font-sans text-base text-navy/50 text-center">
             They were right about you, you really are an OG.{" "}
-            <span className="text-navy/40 text-sm font-semibold">(if you recognize this reference, you are an OG OG! respect! 🫡)</span>
+            <span className="text-navy/40 text-sm font-semibold">(if you recognize this reference, you are an OG OG! respect! &#x1F9CF;)</span>
           </p>
 
           <div className="mb-8 w-full rounded-2xl bg-arb-blue p-6 shadow-lg shadow-arb-blue/20">
@@ -94,7 +94,6 @@ export function ResultsPassScreen({
               This is my first Mini App and I suspect there&apos;s something I missed that would tell Farcaster the contract is safe.
             </p>
           )}
-        </div>
         </div>
       </div>
     </AnimatedBackground>
