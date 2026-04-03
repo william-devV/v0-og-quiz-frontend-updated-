@@ -8,6 +8,7 @@ interface ResultsPassScreenProps {
   score: number
   total: number
   hasMinted?: boolean
+  isMintStatusLoading?: boolean
   isMinting?: boolean
   mintError?: string | null
   onMintAndShare: () => void
@@ -17,6 +18,7 @@ export function ResultsPassScreen({
   score,
   total,
   hasMinted = false,
+  isMintStatusLoading = false,
   isMinting = false,
   mintError = null,
   onMintAndShare,
@@ -39,12 +41,6 @@ export function ResultsPassScreen({
       onMintAndShare()
     }
   }
-
-  const buttonLabel = hasMinted
-    ? "Share Your Score"
-    : isMinting
-      ? "Minting..."
-      : "Mint OG Badge & Share"
 
   return (
     <AnimatedBackground variant="light">
@@ -73,14 +69,28 @@ export function ResultsPassScreen({
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={handleButtonClick}
-            disabled={isMinting}
-            className="w-full rounded-2xl bg-arb-blue px-8 py-4 font-sans text-base font-bold text-white shadow-lg shadow-arb-blue/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-arb-blue/30 active:translate-y-0 active:shadow-md disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
-          >
-            {buttonLabel}
-          </button>
+          {isMintStatusLoading ? (
+            <div className="flex w-full items-center justify-center rounded-2xl bg-arb-blue/20 px-8 py-4">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-arb-blue border-t-transparent" />
+            </div>
+          ) : hasMinted ? (
+            <button
+              type="button"
+              onClick={handleButtonClick}
+              className="w-full rounded-2xl bg-arb-blue px-8 py-4 font-sans text-base font-bold text-white shadow-lg shadow-arb-blue/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-arb-blue/30 active:translate-y-0 active:shadow-md"
+            >
+              Share Your Score
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleButtonClick}
+              disabled={isMinting}
+              className="w-full rounded-2xl bg-arb-blue px-8 py-4 font-sans text-base font-bold text-white shadow-lg shadow-arb-blue/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-arb-blue/30 active:translate-y-0 active:shadow-md disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+            >
+              {isMinting ? "Minting..." : "Mint OG Badge & Share"}
+            </button>
+          )}
 
           {mintError && (
             <p className="mt-3 text-center font-sans text-sm font-medium text-red-500">
@@ -88,7 +98,7 @@ export function ResultsPassScreen({
             </p>
           )}
 
-          {!hasMinted && (
+          {!hasMinted && !isMintStatusLoading && (
             <p className="mt-5 text-center font-sans text-xs font-semibold text-navy/35 leading-relaxed">
               Note: You might get a &apos;malicious token&apos; warning from Farcaster when you try to mint, but I assure you the token is completely safe.{" "}
               This is my first Mini App and I suspect there&apos;s something I missed that would tell Farcaster the contract is safe.

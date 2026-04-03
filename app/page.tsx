@@ -45,6 +45,7 @@ export default function Home() {
   const [currentScreen, setCurrentScreen] = useState<ScreenName | null>(null)
   const [score, setScore] = useState(0)
   const [hasMinted, setHasMinted] = useState(false)
+  const [isMintStatusLoading, setIsMintStatusLoading] = useState(false)
   const [userAnswers, setUserAnswers] = useState<ReviewAnswer[]>([])
   const [reviewFrom, setReviewFrom] = useState<"fail" | "pass">("fail")
   const [mintTxHash, setMintTxHash] = useState<string | null>(null)
@@ -84,6 +85,24 @@ export default function Home() {
     if (currentScreen !== "results-pass" || walletAddress) return
     connectAsync({ connector: connectors[0] }).catch(() => {})
   }, [currentScreen, walletAddress, connectAsync, connectors])
+
+  // Check Supabase mints table when the pass screen loads
+  useEffect(() => {
+    if (currentScreen !== "results-pass" || hasMinted) {
+      if (currentScreen !== "results-pass") setIsMintStatusLoading(false)
+      return
+    }
+    if (!walletAddress) {
+      setIsMintStatusLoading(true)
+      return
+    }
+    setIsMintStatusLoading(true)
+    fetch(`/api/mint/status?wallet=${walletAddress}`)
+      .then(res => res.json())
+      .then(data => { if (data.hasMinted) setHasMinted(true) })
+      .catch(() => {})
+      .finally(() => setIsMintStatusLoading(false))
+  }, [currentScreen, walletAddress, hasMinted])
 
   const handleStartQuiz = useCallback(async () => {
     setIsLoadingQuiz(true)
@@ -293,6 +312,7 @@ export default function Home() {
           score={score}
           total={TOTAL_QUESTIONS}
           hasMinted={hasMinted}
+          isMintStatusLoading={isMintStatusLoading}
           isMinting={isMinting}
           mintError={mintError}
           onMintAndShare={handleMintAndShare}
