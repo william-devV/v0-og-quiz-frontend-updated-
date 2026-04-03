@@ -89,7 +89,7 @@ export function ResultsPassScreen({
           )}
 
           {!hasMinted && (
-            <p className="mt-5 text-center font-sans text-xs text-navy/35 leading-relaxed">
+            <p className="mt-5 text-center font-sans text-xs font-semibold text-navy/35 leading-relaxed">
               Note: You might get a &apos;malicious token&apos; warning from Farcaster when you try to mint, but I assure you the token is completely safe.{" "}
               This is my first Mini App and I suspect there&apos;s something I missed that would tell Farcaster the contract is safe.
             </p>
