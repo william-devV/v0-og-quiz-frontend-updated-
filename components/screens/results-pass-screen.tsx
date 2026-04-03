@@ -44,7 +44,7 @@ export function ResultsPassScreen({
     ? "Share Your Score"
     : isMinting
       ? "Minting..."
-      : "Mint OG NFT & Share"
+      : "Mint OG Badge & Share"
 
   return (
     <AnimatedBackground variant="light">
