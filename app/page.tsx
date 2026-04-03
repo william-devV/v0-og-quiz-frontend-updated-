@@ -42,7 +42,7 @@ interface SubmitResult {
 }
 
 export default function Home() {
-  const [currentScreen, setCurrentScreen] = useState<ScreenName>("splash")
+  const [currentScreen, setCurrentScreen] = useState<ScreenName | null>(null)
   const [score, setScore] = useState(0)
   const [hasMinted, setHasMinted] = useState(false)
   const [userAnswers, setUserAnswers] = useState<ReviewAnswer[]>([])
@@ -65,11 +65,9 @@ export default function Home() {
   const { connectAsync, connectors } = useConnect()
   const { writeContractAsync } = useWriteContract()
 
-  // Skip splash if already seen this session (e.g. back navigation from /badge)
+  // Determine starting screen after mount — never runs on server
   useEffect(() => {
-    if (sessionStorage.getItem("splashSeen")) {
-      setCurrentScreen("welcome")
-    }
+    setCurrentScreen(sessionStorage.getItem("splashSeen") ? "welcome" : "splash")
   }, [])
 
   // Navigate to results once both the animation and the API call are done
@@ -254,6 +252,8 @@ export default function Home() {
   const handleBackFromReview = useCallback(() => {
     setCurrentScreen(reviewFrom === "fail" ? "results-fail" : "results-pass")
   }, [reviewFrom])
+
+  if (currentScreen === null) return null
 
   return (
     <main>
