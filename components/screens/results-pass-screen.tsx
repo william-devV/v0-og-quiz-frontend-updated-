@@ -32,7 +32,7 @@ export function ResultsPassScreen({
   const handleButtonClick = () => {
     if (hasMinted) {
       sdk.actions.composeCast({
-        text: `I scored ${score}/${total} (${percentage}%) on the Arbitrum OG Quiz! \u{1F535}\n\nThink you're OG enough to beat me? Take the quiz:`,
+        text: `Just took the Arbitrum OG Quiz and scored ${percentage}%!\n\nThere you have it, proof that I am an Arbitrum OG. 😌\n\nAre you one also? (take the quiz and let's find out)`,
         embeds: ["https://arbitrum-og-quiz.vercel.app"],
       })
     } else {
