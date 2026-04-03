@@ -53,21 +53,21 @@ export function ResultsPassScreen({
           className={`mx-auto flex w-full max-w-md flex-col items-center ${shouldShake ? "animate-shake-pass" : ""}`}
         >
           {/* Verified badge */}
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-arb-blue shadow-lg shadow-arb-blue/25">
+          <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-arb-blue shadow-lg shadow-arb-blue/25">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
 
-          <h1 className="mb-6 font-sans text-4xl font-bold text-navy">
+          <h1 className="mb-4 font-sans text-4xl font-bold text-navy">
             You Passed!
           </h1>
-          <p className="mb-8 font-sans text-base text-navy/50 text-center">
+          <p className="mb-6 font-sans text-base text-navy/80 text-center">
             They were right about you, you really are an OG.{" "}
-            <span className="text-navy/40 text-sm font-semibold">(if you recognize this reference, you are an OG OG! respect! &#x1F9CF;)</span>
+            <span className="text-navy/80 text-sm font-semibold">(if you recognize this reference, you are an OG OG! respect! &#x1F9CF;)</span>
           </p>
 
-          <div className="mb-8 w-full rounded-2xl bg-arb-blue p-6 shadow-lg shadow-arb-blue/20">
+          <div className="mb-6 w-full rounded-2xl bg-arb-blue p-6 shadow-lg shadow-arb-blue/20">
             <p className="text-center font-sans text-3xl font-bold text-white">
               {score} / {total} -- {percentage}%
             </p>
@@ -89,7 +89,7 @@ export function ResultsPassScreen({
           )}
 
           {!hasMinted && (
-            <p className="mt-4 text-center font-sans text-xs text-navy/35 leading-relaxed">
+            <p className="mt-5 text-center font-sans text-xs text-navy/35 leading-relaxed">
               Note: You might get a &apos;malicious token&apos; warning from Farcaster when you try to mint, but I assure you the token is completely safe.{" "}
               This is my first Mini App and I suspect there&apos;s something I missed that would tell Farcaster the contract is safe.
             </p>
