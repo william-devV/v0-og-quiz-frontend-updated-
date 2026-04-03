@@ -59,12 +59,12 @@ export function ResultsPassScreen({
             </svg>
           </div>
 
-          <h1 className="mb-2 font-sans text-4xl font-bold text-navy">
+          <h1 className="mb-6 font-sans text-4xl font-bold text-navy">
             You Passed!
           </h1>
           <p className="mb-8 font-sans text-base text-navy/50 text-center">
             They were right about you, you really are an OG.{" "}
-            <span className="text-navy/40 text-sm font-normal">(if you recognize this reference, you are an OG OG! respect!)</span>
+            <span className="text-navy/40 text-sm font-semibold">(if you recognize this reference, you are an OG OG! respect! 🫡)</span>
           </p>
 
           <div className="mb-8 w-full rounded-2xl bg-arb-blue p-6 shadow-lg shadow-arb-blue/20">
