@@ -95,10 +95,21 @@ export function ReviewAnswersScreen({
 
                       <div className="space-y-2">
                         {question.options.map((option, optIdx) => {
+                          const isThisCorrect = optIdx === question.correctIndex
+                          const isThisSelected = optIdx === question.selectedIndex
+                          const isWrongSelection = isThisSelected && !isCorrect
+
+                          let optionClass = "bg-navy/5 text-navy/70"
+                          if (isThisCorrect && (!isCorrect || isThisSelected)) {
+                            optionClass = "bg-green-100 text-green-800 font-semibold"
+                          } else if (isWrongSelection) {
+                            optionClass = "bg-red-100 text-red-700 line-through"
+                          }
+
                           return (
                             <div
                               key={optIdx}
-                              className="flex items-start gap-2 rounded-lg px-3 py-2 font-sans text-xs bg-navy/5 text-navy/70"
+                              className={`flex items-start gap-2 rounded-lg px-3 py-2 font-sans text-xs ${optionClass}`}
                             >
                               <span className="shrink-0 font-bold">
                                 {String.fromCharCode(65 + optIdx)}.
