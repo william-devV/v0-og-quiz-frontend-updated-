@@ -7,7 +7,7 @@ import { useAccount } from "wagmi"
 import { sdk } from "@farcaster/miniapp-sdk"
 import { AnimatedBackground } from "@/components/animated-background"
 
-const OPENSEA_URL = "https://opensea.io"
+const OPENSEA_URL = "https://opensea.io/collection/arbitrum-og-badge"
 
 export default function BadgePage() {
   const router = useRouter()
@@ -37,10 +37,7 @@ export default function BadgePage() {
       <div className="flex min-h-[100dvh] flex-col px-6 py-10">
         <button
           type="button"
-          onClick={() => {
-            sessionStorage.setItem("skipSplash", "1")
-            router.push("/")
-          }}
+          onClick={() => router.push("/")}
           className="mb-8 self-start font-sans text-sm text-navy/50 underline underline-offset-4 transition-colors hover:text-navy"
         >
           ← Back

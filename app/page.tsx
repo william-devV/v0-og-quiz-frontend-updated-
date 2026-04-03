@@ -42,16 +42,7 @@ interface SubmitResult {
 }
 
 export default function Home() {
-  const [currentScreen, setCurrentScreen] = useState<ScreenName>(() => {
-    if (typeof window !== "undefined") {
-      const skip = sessionStorage.getItem("skipSplash")
-      if (skip) {
-        sessionStorage.removeItem("skipSplash")
-        return "welcome"
-      }
-    }
-    return "splash"
-  })
+  const [currentScreen, setCurrentScreen] = useState<ScreenName>("splash")
   const [score, setScore] = useState(0)
   const [hasMinted, setHasMinted] = useState(false)
   const [userAnswers, setUserAnswers] = useState<ReviewAnswer[]>([])
@@ -73,6 +64,13 @@ export default function Home() {
   const { address: walletAddress } = useAccount()
   const { connectAsync, connectors } = useConnect()
   const { writeContractAsync } = useWriteContract()
+
+  // Skip splash if already seen this session (e.g. back navigation from /badge)
+  useEffect(() => {
+    if (sessionStorage.getItem("splashSeen")) {
+      setCurrentScreen("welcome")
+    }
+  }, [])
 
   // Navigate to results once both the animation and the API call are done
   useEffect(() => {
@@ -260,7 +258,10 @@ export default function Home() {
   return (
     <main>
       {currentScreen === "splash" && (
-        <SplashScreen onComplete={() => setCurrentScreen("welcome")} />
+        <SplashScreen onComplete={() => {
+          sessionStorage.setItem("splashSeen", "1")
+          setCurrentScreen("welcome")
+        }} />
       )}
 
       {currentScreen === "welcome" && (
